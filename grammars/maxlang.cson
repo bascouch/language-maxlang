@@ -1,0 +1,255 @@
+scopeName: 'source.maxlang'
+name: 'maxlang'
+fileTypes: []
+
+repository:
+  lineComment: {
+    comment: 'This is a rule object, with the same abilities as any other'
+    name: 'comment.line.maxlang'
+    match: '#.*$'
+  }
+  numericValue:
+    {
+      match: '((\\+|\\-)?([0-9]+\\.?[0-9]*)|(\\.[0-9]+))'
+      name: 'constant.numeric.maxlang'
+    }
+  litteralValue:
+    {
+      #match: '\\b\\w+\\b'
+      match: '[a-zA-Z0-9\\-\\_\\.\\/]+|\\"[a-zA-Z0-9\\-\\_\\.\\/]+\\"|\\\'[a-zA-Z0-9\\-\\_\\.\\/]+\\\''
+      name: 'constant.numeric.maxlang'
+    }
+  listValue:
+    {
+      begin: '\\['
+      end: '\\]'
+      name: 'constant.numeric.maxlang'
+      patterns:
+        [
+          {
+            include: '#numericValue'
+          },
+          {
+            match: '\\,'
+          }
+        ]
+    }
+  parameterValue:
+    {
+      patterns:
+        [
+          {
+            include: '#numericValue'
+          }
+          ,
+          {
+            include: '#listValue'
+          }
+          ,
+          {
+            include: '#modtor'
+          }
+          ,
+          {
+            include: '#litteralValue'
+          }
+        ]
+    }
+  modtor:
+    {
+        ## MODTOR
+        name: 'modtor.section.maxlang'
+        begin: '(\\w+\\s*\\()'
+        beginCaptures:
+          1: name: 'support.storage.type.maxlang'
+        end: '(\\))'
+        endCaptures:
+          1: name: 'support.storage.type.maxlang'
+        patterns:
+          [
+
+              {
+                name: 'moduleparam.section.maxlang'
+                begin: '(name\\s*=)'
+                beginCaptures:
+                  1: name: 'comment.line.maxlang'
+                end: '(?=(\\w+\\s*=)|\\))'
+                contentName: 'entity.name.tag.maxlang'
+
+              }
+              ,
+              {
+                name: 'moduleparam.section.maxlang'
+                begin: '(\\w+\\s*=)'
+                beginCaptures:
+                  1: name: 'comment.line.maxlang'
+                end: '(?=(\\w+\\s*=)|\\))'
+                patterns:
+                  [
+                    {
+                      include: '#parameterValue'
+                    }
+                  ]
+                }
+          ]
+
+
+    }
+
+
+patterns: [
+      {
+      match: '(#[^\\n\\r]*)'
+      name: 'comment.SCENE.maxlang'
+      }
+    {
+      begin: '\''
+      end: '\''
+    name: 'string.quoted.single.maxlang'
+    },
+    ## SCENE SECTION
+    {
+      name: 'scene.section.maxlang'
+      begin: '(SCENE) (.*)$'
+      beginCaptures:
+        1: name: 'keyword.language.SCENE.maxlang'
+        2: name: 'entity.name.tag.maxlang'
+      end: '(?=^EVENTS)'
+      endCaptures:
+          1: name: 'keyword.language.SCENE.maxlang'
+      patterns:
+        [
+
+          {
+            #CHAIN SECTION
+            name: 'chain.section.maxlang'
+            begin: '(CHAIN)\\s+(\\S+)\\s*(#.*)*'
+            beginCaptures:
+              1: name: 'keyword.language.SCENE.maxlang'
+              2: name: 'entity.name.tag.maxlang'
+              3: name: 'comment.line.maxlang'
+            end: '(?=CHAIN|^EVENTS)'
+            patterns:
+              [
+                {
+                  name: 'module.section.maxlang'
+                  begin: '^(\\w+)(\\s+(?=\\w+))?'
+                  beginCaptures:
+                    1: name: 'entity.name.function.maxlang'
+                  end: '(#.*)$|$'
+                  endCaptures:
+                    0: name: 'comment.line.maxlang'
+                  patterns:
+                    [
+                      {
+                        name: 'moduleparam.section.maxlang'
+                        begin: '(name\\s*=\\s*)'
+                        beginCaptures:
+                          1: name: 'comment.line.maxlang'
+                        end: '(\\s|(?=#(.*)$)|$)'
+                        endCaptures:
+                          0: 'comment.line.maxlang'
+                        contentName: 'entity.name.tag.maxlang'
+
+                      }
+                      {
+                        name: 'moduleparam1.section.maxlang'
+                        begin: '(\\w+\\s*=)'
+                        beginCaptures:
+                          1: name: 'comment.line.maxlang'
+                        end: '(?=(\\w+\\s*=)|(?=#(.*)$)|$)'
+                        endCaptures:
+                          0: name: 'comment.line.maxlang'
+                        patterns:
+                          [
+                            {
+                              include: '#parameterValue'
+                            }
+
+                          ]
+
+                      }
+
+
+                    ]
+                }
+                {
+                  include: '#lineComment'
+                }
+              ]
+          }
+          {
+            include: '#lineComment'
+          }
+
+        ]
+      },
+      ## EVENTS SECTION
+      {
+        name: 'events.section.example'
+        begin: '(EVENTS)$'
+        beginCaptures:
+          1: name: 'keyword.language.SCENE.maxlang'
+        patterns:
+          [
+            {
+              match: '(CUE)\\s+([a-zA-Z0-9\\-\\_]+)(\\s*#.*)?$'
+              captures:
+                1: name: 'keyword.language.EVENTS.maxlang'
+                2: name: 'entity.name.tag.maxlang'
+                3: name: 'comment.SCENE.maxlang'
+            }
+            {
+              match: '(ONSTART|ONRELEASE)(\\s*#.*)?$'
+              captures:
+                1: name: 'keyword.language.EVENTS.maxlang'
+                2: name: 'comment.SCENE.maxlang'
+            }
+            {
+              match: '^([a-zA-Z0-9\\-\\_\\.]+)\\s+([a-zA-Z0-9\\-\\_\\.\\/]+)\\s*([^#]*)(\\s*#.*)?$'
+              captures:
+                1: name: 'string.quoted.double.maxlang'
+                4: name: 'comment.SCENE.maxlang'
+                2: name: 'entity.name.function.maxlang'
+                3:
+                  name: 'message.section.maxlang'
+                  patterns:
+                    [
+                      {
+                        name: 'moduleparam.section.maxlang'
+                        begin: '(\\w+\\s*=)'
+                        beginCaptures:
+                          1: name: 'comment.line.maxlang'
+                        end: '(?=(\\w+\\s*=)|$)'
+                        patterns:
+                          [
+                            {
+                              include: '#parameterValue'
+                            }
+
+                          ]
+
+                      }
+                      {
+                        include:'#parameterValue'
+                      }
+                      {
+                        include: '#litteralValue'
+                      }
+
+                    ]
+
+            }
+            {
+              match: '^((\\+|\\-)?([0-9]+\\.?[0-9]*)|(\\.[0-9]+))'
+              name: 'support.storage.type.maxlang'
+
+            }
+            {
+              include: '#lineComment'
+            }
+          ]
+
+        }
+
+]
