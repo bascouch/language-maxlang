@@ -1,6 +1,7 @@
 {
   "name": "language-maxlang",
   "version": "0.1.0",
+  "repository": "github.com/bascouch/language-maxlang",
   "bundleDependencies": false,
   "deprecated": false,
   "description": "maxlang language support in Atom",
