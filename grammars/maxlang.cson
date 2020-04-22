@@ -1,6 +1,7 @@
 scopeName: 'source.maxlang'
 name: 'maxlang'
-fileTypes: []
+fileTypes: ['txt']
+firstLineMatch: 'SCENE(.*)$'
 
 repository:
   lineComment: {
