@@ -1,7 +1,7 @@
 {
   "name": "language-maxlang",
   "main": "./lib/language-maxlang",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "repository": "https://github.com/bascouch/language-maxlang",
   "dependencies": {
     "node-osc": "^2.1.0"
