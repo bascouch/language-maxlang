@@ -2,11 +2,24 @@
   "name": "language-maxlang",
   "version": "2.0.0",
   "repository": "https://github.com/bascouch/language-maxlang",
-  "bundleDependencies": false,
+  "dependencies": {
+    "node-osc": "^2.1.0"
+  },
   "deprecated": false,
   "description": "maxlang language support in Atom",
   "engines": {
     "atom": "*",
     "node": "*"
+  }
+  ,"activationCommands": {
+    "atom-workspace": [
+      "language-maxlang:toggle",
+      "maxlang:startmaxlang",
+      "maxlang:oscsend",
+      "maxlang:startfromlabel",
+      "maxlang:stoptantescofo",
+      "maxlang:Loadantescofo",
+      "maxlang:nextevent"
+    ]
   }
 }

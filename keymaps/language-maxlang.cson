@@ -1,0 +1,34 @@
+# Keybindings require three things to be fully defined: A selector that is
+# matched against the focused element, the keystroke and the command to
+# execute.
+#
+# Below is a basic keybinding which registers on all platforms by applying to
+# the root workspace element.
+
+# For more detailed documentation see
+# http://flight-manual.atom.io/behind-atom/sections/keymaps-in-depth/
+
+# Windows and Linux
+"atom-workspace atom-text-editor[data-grammar~='maxlang']":
+ # 'ctrl-alt-l': 'maxlang:open-post-window'
+  'shift-enter': 'maxlang:oscsend'
+  'alt-enter': 'maxlang:oscsend'
+  'alt-.': 'maxlang:cmd-period'
+ # 'shift-alt-k': 'maxlang:clear-post-window'
+ # 'ctrl-shift-h': 'maxlang:open-help-file'
+ # 'alt-shift-b': 'maxlang:boot-server'
+ # 'alt-shift-q': 'maxlang:quit-server'
+ # 'shift-alt-ctrl-x': 'maxlang:quit-lang'
+
+# OS X
+".platform-darwin atom-workspace atom-text-editor[data-grammar~='maxlang']":
+ # 'cmd-\\': 'maxlang:open-post-window'
+  'shift-enter': 'maxlang:oscsend'
+  'cmd-enter': 'maxlang:oscsend'
+ # 'shift-cmd-k': 'maxlang:recompile'
+  'cmd-.': 'maxlang:cmd-period'
+ # 'shift-cmd-c': 'maxlang:clear-post-window'
+ # 'alt-shift-b': 'maxlang:boot-server'
+ # 'alt-shift-q': 'maxlang:quit-server'
+ # 'ctrl-shift-h': 'maxlang:open-help-file'
+ # 'ctrl-shift-h': 'maxlang:open-help-file'
